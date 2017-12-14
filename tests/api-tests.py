@@ -228,8 +228,7 @@ class EndpointBuildURIWithTokenTests(unittest.TestCase):
         self.assertEqual(parsed.netloc, 'localhost:8500')
         self.assertEqual(parsed.path, '/{0}/endpoint/foo/bar'.format(VERSION))
         self.assertDictEqual(query_params,
-                             {'token': [self.token],
-                              'baz': ['qux']})
+                             {'baz': ['qux']})
 
 
 class EndpointBuildURIWithDCAndTokenTests(unittest.TestCase):
@@ -255,9 +254,7 @@ class EndpointBuildURIWithDCAndTokenTests(unittest.TestCase):
         self.assertEqual(parsed.scheme, SCHEME)
         self.assertEqual(parsed.netloc, 'localhost:8500')
         self.assertEqual(parsed.path, '/{0}/endpoint/foo/bar'.format(VERSION))
-        self.assertDictEqual(query_params,
-                             {'dc': [self.dc],
-                              'token': [self.token]})
+        self.assertDictEqual(query_params, {'dc': [self.dc]})
 
     def test_build_uri_with_params(self):
         result = self.endpoint._build_uri(['foo', 'bar'], {'baz': 'qux'})
@@ -269,7 +266,6 @@ class EndpointBuildURIWithDCAndTokenTests(unittest.TestCase):
         self.assertDictEqual(
             query_params,
             {'dc': [self.dc],
-             'token': [self.token],
              'baz': ['qux']})
 
 
