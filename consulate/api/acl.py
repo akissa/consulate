@@ -59,8 +59,8 @@ class ACL(base.Endpoint):
 
         """
         response = self._adapter.put(self._build_uri(['clone', acl_id]))
-        # if response.status_code == 403:
-        #     raise exceptions.Forbidden(response.body)
+        if response.status_code == 403:
+            raise exceptions.Forbidden(response.body)
         if response.status_code == 404:
             raise exceptions.NotFound(response.body)
         return response.body.get('ID')
