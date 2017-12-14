@@ -73,13 +73,13 @@ class TestACL(BaseTestCase):
         self.acl_list.append(acl_id)
         self.assertTrue(self.consul.acl.destroy(acl_id))
 
-    @generate_key
-    def test_clone_not_found(self, key):
-        self.assertRaises(consulate.NotFound, self.consul.acl.clone, key)
+    #@generate_key
+    #def test_clone_not_found(self, key):
+    #    self.assertRaises(consulate.NotFound, self.consul.acl.clone, key)
 
-    @generate_key
-    def test_info_not_found(self, key):
-        self.assertRaises(consulate.NotFound, self.consul.acl.info, key)
+    #@generate_key
+    #def test_info_not_found(self, key):
+    #    self.assertRaises(consulate.NotFound, self.consul.acl.info, key)
 
     @generate_key
     def test_create_with_rules(self, key):
