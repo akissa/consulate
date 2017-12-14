@@ -37,7 +37,8 @@ def prepare_data(fun):
         if kwargs.get('data'):
             if not utils.is_string(kwargs.get('data')):
                 kwargs['data'] = json.dumps(kwargs['data'])
-        elif len(args) == 3 and not (utils.is_string(args[2]) or args[2] is None):
+        elif len(args) == 3 and not \
+                (utils.is_string(args[2]) or args[2] is None):
             args = args[0], args[1], json.dumps(args[2])
         return fun(*args, **kwargs)
 
@@ -47,7 +48,7 @@ def prepare_data(fun):
 class Request(object):
     """The Request adapter class"""
 
-    def __init__(self, timeout=None, verify=True, cert=None):
+    def __init__(self, timeout=None, verify=True, cert=None, token=None):
         """
         Create a new request adapter instance.
 
@@ -58,6 +59,9 @@ class Request(object):
         self.session.verify = verify
         self.session.cert = cert
         self.timeout = timeout
+        self.headers = {}
+        if token:
+            self.headers['X-Consul-Token'] = token
 
     def delete(self, uri):
         """Perform a HTTP delete
@@ -67,8 +71,9 @@ class Request(object):
 
         """
         LOGGER.debug("DELETE %s", uri)
-        return self._process_response(self.session.delete(uri,
-                                                          timeout=self.timeout))
+        return self._process_response(
+            self.session.delete(
+                uri, timeout=self.timeout, headers=self.headers))
 
     def get(self, uri):
         """Perform a HTTP get
@@ -78,8 +83,8 @@ class Request(object):
 
         """
         LOGGER.debug("GET %s", uri)
-        return self._process_response(self.session.get(uri,
-                                                       timeout=self.timeout))
+        return self._process_response(
+            self.session.get(uri, timeout=self.timeout, headers=self.headers))
 
     @prepare_data
     def put(self, uri, data=None):
@@ -95,6 +100,7 @@ class Request(object):
             'Content-Type': CONTENT_FORM
             if utils.is_string(data) else CONTENT_JSON
         }
+        headers.update(self.headers)
         return self._process_response(self.session.put(uri,
                                                        data=data,
                                                        headers=headers,
@@ -116,6 +122,6 @@ class Request(object):
 class UnixSocketRequest(Request):
     """Use to communicate with Consul over a Unix socket"""
 
-    def __init__(self, timeout=None):
-        super(UnixSocketRequest, self).__init__(timeout)
+    def __init__(self, timeout=None, token=None):
+        super(UnixSocketRequest, self).__init__(timeout, token=token)
         self.session = requests_unixsocket.Session()

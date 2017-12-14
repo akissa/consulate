@@ -69,7 +69,11 @@ class Consul(object):
                  cert=None):
         """Create a new instance of the Consul class"""
         base_uri = self._base_uri(scheme, host, port)
-        self._adapter = adapter() if adapter else adapters.Request(verify=verify, cert=cert)
+        if adapter:
+            self._adapter = adapter(token=token)
+        else:
+            self._adapter = adapters.Request(
+                verify=verify, cert=cert, token=token)
         self._acl = api.ACL(base_uri, self._adapter, datacenter, token)
         self._agent = api.Agent(base_uri, self._adapter, datacenter, token)
         self._catalog = api.Catalog(base_uri, self._adapter, datacenter, token)

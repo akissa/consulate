@@ -43,8 +43,8 @@ class Endpoint(object):
             query_params = dict()
         if self._dc:
             query_params['dc'] = self._dc
-        if self._token:
-            query_params['token'] = self._token
+        # if self._token:
+        #     query_params['token'] = self._token
         path = '/'.join(params)
         if query_params:
             return '{0}/{1}?{2}'.format(self._base_uri, path,
