@@ -218,7 +218,7 @@ class EndpointBuildURIWithTokenTests(unittest.TestCase):
         self.assertEqual(parsed.scheme, SCHEME)
         self.assertEqual(parsed.netloc, 'localhost:8500')
         self.assertEqual(parsed.path, '/{0}/endpoint/foo/bar'.format(VERSION))
-        self.assertDictEqual(query_params, {'token': [self.token]})
+        self.assertDictEqual(query_params, {})
 
     def test_build_uri_with_params(self):
         result = self.endpoint._build_uri(['foo', 'bar'], {'baz': 'qux'})
