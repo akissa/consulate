@@ -197,8 +197,8 @@ For more examples, check out the Consulate documentation.
 .. |Version| image:: https://img.shields.io/pypi/v/consulate.svg?
    :target: https://pypi.python.org/pypi/consulate
 
-.. |Status| image:: https://img.shields.io/travis/gmr/consulate.svg?
-   :target: https://travis-ci.org/gmr/consulate
+.. |Status| image:: https://travis-ci.org/akissa/consulate.svg?branch=baruwa
+   :target: https://travis-ci.org/akissa/consulate
 
 .. |Coverage| image:: https://img.shields.io/codecov/c/github/gmr/consulate.svg?
    :target: https://codecov.io/github/gmr/consulate?branch=master
